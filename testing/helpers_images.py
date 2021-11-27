@@ -27,7 +27,7 @@ RECORDING_STEP = 0
 # Set image patch size in pixels
 # IMG_PATCH_SIZE should be a multiple of 4
 # image size should be an integer multiple of this number!
-IMG_PATCH_SIZE = 16
+IMG_PATCH_SIZE = 32
 # Extract patches from a given image
 def img_crop(im, w, h):
     list_patches = []
@@ -60,7 +60,10 @@ def extract_data_from_directory(directory_name, file_basename, num_images, train
         image_filename = directory_name + "images/" + imageid + ".png"
         if os.path.isfile(image_filename):
             print('Loading ' + image_filename)
-            img = mpimg.imread(image_filename)
+            #img = mpimg.imread(image_filename)
+            image = Image.open(image_filename)
+            image = image.resize((608,608), Image.ANTIALIAS)
+            img = (numpy.array(image.getdata())/255.0).reshape(608,608,3)
             imgs.append(img)
         else:
             print('File ' + image_filename + ' does not exist')
@@ -103,7 +106,10 @@ def extract_labels(filename, num_images, flip_left_right = False, rot_90 = False
         image_filename = filename + "groundtruth/" + imageid + ".png"
         if os.path.isfile(image_filename):
             print('Loading ' + image_filename)
-            img = mpimg.imread(image_filename)
+            #img = mpimg.imread(image_filename)
+            image = Image.open(image_filename)
+            image = image.resize((608,608), Image.ANTIALIAS)
+            img = (numpy.array(image.getdata())/255.0).reshape(608,608)
             gt_imgs.append(img)
         else:
             print('File ' + image_filename + ' does not exist')

@@ -4,31 +4,20 @@ import sys
 import urllib
 import matplotlib.image as mpimg
 from PIL import Image
-
 import code
-
 import tensorflow.python.platform
-
 import numpy
 import tensorflow as tf
 training_data_directory = "../data/training/"
 test_data_directory = "../data/test_set_images/"
-NUM_CHANNELS = 3  # RGB images
 PIXEL_DEPTH = 255
-NUM_LABELS = 2
-TRAINING_SIZE = 20
-VALIDATION_SIZE = 5  # Size of the validation set.
-SEED = 66478  # Set to None for random seed.
-BATCH_SIZE = 16  # 64
-NUM_EPOCHS = 100
-RESTORE_MODEL = False  # If True, restore existing model instead of training a new one
-RECORDING_STEP = 0
 
 # Set image patch size in pixels
 # IMG_PATCH_SIZE should be a multiple of 4
 # image size should be an integer multiple of this number!
 IMG_PATCH_SIZE = 400
 IMG_SIZE = 400
+
 # Extract patches from a given image
 def img_crop(im, w, h):
     list_patches = []
@@ -165,33 +154,6 @@ def extract_labels(filename, num_images, unet = False):
     # Convert to dense 1-hot representation.
     return labels.astype(numpy.float32)
 
-
-def error_rate(predictions, labels):
-    """Return the error rate based on dense predictions and 1-hot labels."""
-    return 100.0 - (
-        100.0 *
-        numpy.sum(numpy.argmax(predictions, 1) == numpy.argmax(labels, 1)) /
-        predictions.shape[0])
-
-
-# Write predictions from neural network to a file
-def write_predictions_to_file(predictions, labels, filename):
-    max_labels = numpy.argmax(labels, 1)
-    max_predictions = numpy.argmax(predictions, 1)
-    file = open(filename, "w")
-    n = predictions.shape[0]
-    for i in range(0, n):
-        file.write(max_labels(i) + ' ' + max_predictions(i))
-    file.close()
-
-
-# Print predictions from neural network
-def print_predictions(predictions, labels):
-    max_labels = numpy.argmax(labels, 1)
-    max_predictions = numpy.argmax(predictions, 1)
-    print(str(max_labels) + ' ' + str(max_predictions))
-
-
 # Convert array of labels to an image
 def label_to_img(imgwidth, imgheight, w, h, labels):
     array_labels = numpy.zeros([imgwidth, imgheight])
@@ -245,7 +207,6 @@ def make_img_overlay(img, predicted_img):
 
 def get_prediction(img, model):
     data = numpy.asarray(img_crop(img, IMG_PATCH_SIZE, IMG_PATCH_SIZE))
-    #output_prediction = tf.nn.softmax(model(data))
     output_prediction = model(data)
     img_prediction = label_to_img(img.shape[0], img.shape[1], IMG_PATCH_SIZE, IMG_PATCH_SIZE, output_prediction)
 

@@ -27,7 +27,7 @@ All code, may it be scripts or notebooks, are in the 'src' folder.
 In order to build the model, we had to choose between multiple libraries (Sklearn, Pytorch, Tensorflow), and we settled on Tensorflow as we found it to be the best to learn for this project.    
 We first tried to build a [CNN](https://en.wikipedia.org/wiki/Convolutional_neural_network) by basing ourselves on the given code: we would take small patches of the images (16x16, 32x32, etc...) and try to predict if this patch contains a road or not. The mask is then created from the given label (entirely black if no road, or white).    
 This strategy didn't prove itself to be efficient however, and thus we turned to another solution by implementing a [Unet](https://en.wikipedia.org/wiki/U-Net) which is particularily adapted for image segmentation problems. In this case, we feed the unet the whole image and its groundtruth. This approach proved itself to be more efficient.    
-The most notable models can be found in the "models" subfolder of "src".
+The most notable models can be found in the "models" subfolder of "src"; the Unet architecture can be seen here : https://i.imgur.com/rFT88ct.png .
 
 ### Running the code
 In order to generate the predictions made by our best model, as well as the corresponding CSV file that can be uploaded to [AIcrowd](https://www.aicrowd.com), simply run the "run.py" file, and it will generate a folder in which you can see the predictions made.

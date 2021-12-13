@@ -1,32 +1,18 @@
-# Project Road Segmentation
+# Class project 2 | Road Segmentation
 
-For this choice of project task, we provide a set of satellite images acquired 
-from GoogleMaps. We also provide ground-truth images where each pixel is labeled 
-as road or background. 
+This is our submission for the second project of "CS-433: Machine Learning" where we designed an Image segmentation model using Deep Learning.
 
-Your task is to train a classifier to segment roads in these images, i.e. 
-assigns a label `road=1, background=0` to each pixel.
 
-Submission system environment setup:
+## Problem description
 
-1. The dataset is available from the 
-[CrowdAI page](https://www.crowdai.org/challenges/epfl-ml-road-segmentation).
+In this project, we were provided a set of satellite images acquired from Google Maps, along with the groundtruth images associated with these images. In the latter, each pixel is given one of two colors: white if the pixel in the corresponding aerial image happens to be on a road, and black otherwise. Below we show an example of an image and its groundtruth right next to it.
 
-2. Obtain the python notebook `segment_aerial_images.ipynb` from this github 
-folder, to see example code on how to extract the images as well as 
-corresponding labels of each pixel.
+![alt text](https://i.imgur.com/AzjLs5M.png)
+![alt text](https://i.imgur.com/YZT56cx.png)
 
-The notebook shows how to use `scikit learn` to generate features from each 
-pixel, and finally train a linear classifier to predict whether each pixel is 
-road or background. Or you can use your own code as well. Our example code here 
-also provides helper functions to visualize the images, labels and predictions. 
-In particular, the two functions `mask_to_submission.py` and 
-`submission_to_mask.py` help you to convert from the submission format to a 
-visualization, and vice versa.
+Our task was to create a model that could generate grountruths for 50 new aerial images. 
+## Data extraction
 
-3. As a more advanced approach, try `tf_aerial_images.py`, which demonstrates 
-the use of a basic convolutional neural network in TensorFlow for the same 
-prediction task.
+Before running any file, please extract the train and test directories in the "data" folder. Simply right click on both zip and click "extract here".
 
-Evaluation Metric:
- [F1 score](https://en.wikipedia.org/wiki/F1_score)
+## The 'src' folder

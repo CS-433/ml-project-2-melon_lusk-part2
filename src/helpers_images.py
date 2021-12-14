@@ -8,6 +8,7 @@ import code
 import tensorflow.python.platform
 import numpy
 import tensorflow as tf
+import tensorflow_addons as tfa
 
 training_data_directory = "../data/training/"
 test_data_directory = "../data/test_set_images/"
@@ -49,7 +50,7 @@ def extract_data_from_directory(directory_name, file_basename, num_images, train
         imageid = file_basename + "_%.3d"%i
         #imageid = "satImage_%.3d" % i
         image_filename = directory_name + "images/" + imageid + ".png"
-        if os.path.isfile(image_filename):
+        if os.path.isfile(image_filename) and i != 8 and i != 11 and i != 33 and i != 41 and i != 53 and i != 65 and i != 78 and i != 96:
             print('Loading ' + image_filename)
             #img = mpimg.imread(image_filename)
             image = Image.open(image_filename)
@@ -77,7 +78,10 @@ def extract_data_from_directory(directory_name, file_basename, num_images, train
         imgs.append(transformation)
         transformation = tf.image.rot90(transformation) #180 degrees rotation of the image
         imgs.append(transformation)
-        imgs.append(tf.image.rot90(transformation)) # 270 degrees rotation of the image
+        transformation = numpy.expand_dims(transformation, axis = 0)
+        transformation = tfa.image.rotate(transformation, 0.78539816339, fill_mode = 'reflect') #225 degrees rotation to detect diagonals
+        imgs.append(transformation[0])
+        imgs.append(tf.image.rot90(transformation[0])) # 315 degrees rotation of the image
     for i in range(num_images):
         seed = (i, 0)
         imgs.append(tf.image.stateless_random_brightness(imgs[i],0.2,seed)) # adjust the brightness of the image
@@ -95,7 +99,7 @@ def extract_data_from_directory(directory_name, file_basename, num_images, train
     num_images = len(imgs)
     img_patches = [img_crop(imgs[i], IMG_PATCH_SIZE, IMG_PATCH_SIZE) for i in range(num_images)]
     data = [img_patches[i][j] for i in range(len(img_patches)) for j in range(len(img_patches[i]))]
-    return numpy.asarray(data)
+    return tf.convert_to_tensor(data)
             
 def extract_train_data(num_images):
     return extract_data_from_directory(training_data_directory,"satImage", num_images, True)
@@ -120,7 +124,7 @@ def extract_labels(filename, num_images, unet = False):
     for i in range(1, num_images + 1):
         imageid = "satImage_%.3d" % i
         image_filename = filename + "groundtruth/" + imageid + ".png"
-        if os.path.isfile(image_filename):
+        if os.path.isfile(image_filename) and i != 8 and i != 11 and i != 33 and i != 41 and i != 53 and i != 65 and i != 78 and i != 96:
             print('Loading ' + image_filename)
             #img = mpimg.imread(image_filename)
             image = Image.open(image_filename)
@@ -153,7 +157,10 @@ def extract_labels(filename, num_images, unet = False):
         gt_imgs.append(transformation[:,:,0].numpy())
         transformation = tf.image.rot90(transformation)  # 180 degrees rotation of the groundtruth
         gt_imgs.append(transformation[:,:,0].numpy())
-        gt_imgs.append(tf.image.rot90(transformation)[:,:,0].numpy())  # 270 degrees rotation of the groundtruth
+        transformation = numpy.expand_dims(transformation, axis = 0)
+        transformation = tfa.image.rotate(transformation, 0.78539816339, fill_mode = 'reflect') #225 degrees rotation to detect diagonals
+        gt_imgs.append(transformation[0,:,:,0].numpy())
+        gt_imgs.append(tf.image.rot90(transformation[0])[:,:,0].numpy())  # 315 degrees rotation of the groundtruth
     for i in range(num_images):
         gt_imgs.append(gt_imgs[i]) # groundtruth corresponding to the brightness change
     for i in range(num_images):

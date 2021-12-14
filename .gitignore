@@ -1,6 +1,7 @@
 .ipynb_checkpoints/
 data/training/
 data/test_set_images/
-src/predictions_testing/
+src/submission.csv
+src/predictions/
 src/.ipynb_checkpoints/
 src/__pycache__/

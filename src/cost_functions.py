@@ -1,5 +1,9 @@
 import tensorflow.keras as keras
 
+"""
+Helper file to define the metrics we used during the project; we devide them into we used for the unet, and those we used for the CNN
+"""
+
 # For Unet
 def dice_coef(y_true, y_pred, smooth = 1):
     y_true_f = K.flatten(y_true)

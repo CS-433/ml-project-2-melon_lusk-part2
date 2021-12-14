@@ -14,7 +14,6 @@ from submission_creation import *
 from helpers_images import *
 
 PATH_TEST_IMAGES = "../data/test_set_images/"
-PATH_TRAINING_IMAGES = "../data/training/"
 PREDICTIONS_PATH = "./predictions/"
 
 ####################################################################################
@@ -99,7 +98,7 @@ def train_unet(train_data, train_labels,epochs = 200, nbr_filters = 16, dropout 
 
 
 ####################################################################################
-# Helpers create a submission in the case of a unet
+# Helpers create a submission
 ####################################################################################
 
 def predict(model,all_images_arrays, k):

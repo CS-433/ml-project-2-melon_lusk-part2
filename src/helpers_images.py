@@ -50,9 +50,8 @@ def extract_data_from_directory(directory_name, file_basename, num_images, train
         imageid = file_basename + "_%.3d"%i
         #imageid = "satImage_%.3d" % i
         image_filename = directory_name + "images/" + imageid + ".png"
-        if os.path.isfile(image_filename) and i != 8 and i != 11 and i != 33 and i != 41 and i != 53 and i != 65 and i != 78 and i != 96:
+        if os.path.isfile(image_filename) and i != 8 and i != 11 and i != 33 and i != 41 and i != 53 and i != 65 and i != 78 and i != 96: #we don't load the images that we judge have a poor groundtruth corresponding to them, suspectible to induce the model in error.
             print('Loading ' + image_filename)
-            #img = mpimg.imread(image_filename)
             image = Image.open(image_filename)
             image = image.resize((IMG_SIZE,IMG_SIZE), Image.ANTIALIAS)
             image = (numpy.array(image.getdata())/255.0).reshape(IMG_SIZE,IMG_SIZE,3)
@@ -124,9 +123,8 @@ def extract_labels(filename, num_images, unet = False):
     for i in range(1, num_images + 1):
         imageid = "satImage_%.3d" % i
         image_filename = filename + "groundtruth/" + imageid + ".png"
-        if os.path.isfile(image_filename) and i != 8 and i != 11 and i != 33 and i != 41 and i != 53 and i != 65 and i != 78 and i != 96:
+        if os.path.isfile(image_filename) and i != 8 and i != 11 and i != 33 and i != 41 and i != 53 and i != 65 and i != 78 and i != 96:#we don't load the images that we judge have a poor groundtruth corresponding to them, suspectible to induce the model in error.
             print('Loading ' + image_filename)
-            #img = mpimg.imread(image_filename)
             image = Image.open(image_filename)
             image = image.resize((IMG_SIZE,IMG_SIZE), Image.ANTIALIAS)
             img = (numpy.array(image.getdata())/255.0).reshape(IMG_SIZE,IMG_SIZE)

@@ -15,7 +15,7 @@ from helpers_images import *
 
 PATH_TEST_IMAGES = "../data/test_set_images/"
 PREDICTIONS_PATH = "./predictions/"
-
+IMG_PATCH_SIZE = 400
 ####################################################################################
 # Helpers to create and train the model
 ####################################################################################

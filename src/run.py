@@ -6,9 +6,9 @@ import tensorflow as tf
 
 """
 When running this file, it will:
-    1. Load the unet model which performed the best
-    2. Precict the masks of the test images
-    3. Create the corresponding CSV submission file
+    1. Load the U-net model which performed the best
+    2. Precict the masks of the test images, and store these in a "predictions" folder, so we can see them
+    3. Create the corresponding CSV submission file that can be uploaded to the AIcrowd website.
 """
 
 def main():

@@ -10,7 +10,6 @@ def build_CNN_model(nbr_filters  = 64):
     """
     Function we use to create a pretty simple CNN
     """
-    
     model = keras.Sequential()
     model.add(layers.RandomZoom(-0.3))
     model.add(layers.Conv2D(nbr_filters, (1, 1), activation='elu', padding = "same"))

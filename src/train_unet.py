@@ -1,5 +1,5 @@
 from helpers_unet import *
-from helpers_images import *
+from helpers_images_prototype import *
 
 PATH_TEST_IMAGES = "../data/test_set_images/"
 PATH_TRAINING_IMAGES = "../data/training/"
@@ -14,8 +14,10 @@ When running this on a GPU, it would take one hour at most; running it on a CPU 
 
 def main():
     #load data
-    train_data = extract_train_data(NUMBER_TRAINING_EXAMPLES)
-    train_labels =  extract_labels(training_data_directory, NUMBER_TRAINING_EXAMPLES,True)
+    img_size = 400
+    NUMBER_TRAINING_EXAMPLES = 100
+    train_data = extract_train_data(NUMBER_TRAINING_EXAMPLES,img_size)
+    train_labels =  extract_labels(training_data_directory, NUMBER_TRAINING_EXAMPLES, img_size, True)
     #define training params and train
     epochs = 50
     nbr_filters = 16

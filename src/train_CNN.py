@@ -1,5 +1,5 @@
 from helpers_CNN import *
-from helpers_images import *
+from helpers_images_prototype import *
 
 PATH_TEST_IMAGES = "../data/test_set_images/"
 PATH_TRAINING_IMAGES = "../data/training/"
@@ -12,8 +12,10 @@ The created model will be saved in the 'models' folder.
 
 def main():
     #load data
-    train_data = extract_train_data(NUMBER_TRAINING_EXAMPLES)
-    train_labels =  extract_labels(training_data_directory, NUMBER_TRAINING_EXAMPLES,True)
+    img_size = 16
+    NUMBER_TRAINING_EXAMPLES = 100
+    train_data = extract_train_data(NUMBER_TRAINING_EXAMPLES,img_size)
+    train_labels =  extract_labels(training_data_directory, NUMBER_TRAINING_EXAMPLES,img_size, False)
     #define training params and train
     epochs = 50
     nbr_filters = 64

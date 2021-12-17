@@ -1,4 +1,5 @@
 import tensorflow.keras as keras
+from keras import backend as K
 
 """
 Helper file to define the metrics we used during the project; we devide them into we used for the unet, and those we used for the CNN

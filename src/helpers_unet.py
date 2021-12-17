@@ -92,7 +92,7 @@ def train_unet(train_data, train_labels,epochs = 200, nbr_filters = 16, dropout 
     model.compile(optimizer='adam',
             loss=soft_dice_loss,
           metrics=[dice_coef])
-    history = model.fit(train_data, train_labels, epochs=epochs, validation_split = 0.01, batch_size = 8,callbacks = [ earlystopper, lr_reducer])
+    history = model.fit(train_data, train_labels, epochs=epochs, validation_split = 0.05, batch_size = 8,callbacks = [ earlystopper, lr_reducer])
     return model
 
 

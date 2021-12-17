@@ -27,7 +27,7 @@ def build_CNN_model(nbr_filters  = 64):
 
 
 def train_CNN(train_data, train_labels, epochs = 50, nbr_filters = 64):
-    model = build_CNN_model(train_data,train_labels, nbr_filters)
+    model = build_CNN_model(nbr_filters)
     model.compile(optimizer='adam',
             loss= tf.keras.losses.CategoricalCrossentropy(from_logits=False),
             metrics=[f1_score, 'accuracy'])

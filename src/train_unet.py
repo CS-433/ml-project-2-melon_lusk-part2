@@ -19,7 +19,7 @@ def main():
     train_data = extract_train_data(NUMBER_TRAINING_EXAMPLES,img_size)
     train_labels =  extract_labels(training_data_directory, NUMBER_TRAINING_EXAMPLES, img_size, True)
     #define training params and train
-    epochs = 50
+    epochs = 200
     nbr_filters = 16
     dropout = True
     dropout_rate = 0.1

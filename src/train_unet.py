@@ -14,7 +14,7 @@ When running this on a GPU, it would take one hour at most; running it on a CPU 
 
 def main():
     #load data
-    img_size = 400
+    img_patch_size = 400
     NUMBER_TRAINING_EXAMPLES = 100
     train_data = extract_train_data(NUMBER_TRAINING_EXAMPLES,img_size)
     train_labels =  extract_labels(training_data_directory, NUMBER_TRAINING_EXAMPLES, img_size, True)

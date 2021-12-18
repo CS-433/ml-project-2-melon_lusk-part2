@@ -12,7 +12,7 @@ The created model will be saved in the 'models' folder.
 
 def main():
     #load data
-    img_size = 16
+    img_patch_size = 16
     NUMBER_TRAINING_EXAMPLES = 100
     train_data = extract_train_data(NUMBER_TRAINING_EXAMPLES,img_size)
     train_labels =  extract_labels(training_data_directory, NUMBER_TRAINING_EXAMPLES,img_size, False)

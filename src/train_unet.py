@@ -1,6 +1,6 @@
 from helpers_unet import *
 from helpers_images_prototype import *
-
+import os
 PATH_TEST_IMAGES = "../data/test_set_images/"
 PATH_TRAINING_IMAGES = "../data/training/"
 
@@ -16,8 +16,8 @@ def main():
     #load data
     img_patch_size = 400
     NUMBER_TRAINING_EXAMPLES = 100
-    train_data = extract_train_data(NUMBER_TRAINING_EXAMPLES,img_size)
-    train_labels =  extract_labels(training_data_directory, NUMBER_TRAINING_EXAMPLES, img_size, True)
+    train_data = extract_train_data(NUMBER_TRAINING_EXAMPLES,img_patch_size)
+    train_labels =  extract_labels(training_data_directory, NUMBER_TRAINING_EXAMPLES, img_patch_size, True)
     #define training params and train
     epochs = 200
     nbr_filters = 16

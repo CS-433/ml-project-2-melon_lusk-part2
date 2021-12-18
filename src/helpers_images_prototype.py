@@ -90,8 +90,8 @@ def extract_data_from_directory(directory_name, file_basename, num_images, img_p
     data = [img_patches[i][j] for i in range(len(img_patches)) for j in range(len(img_patches[i]))]
     return tf.convert_to_tensor(data)
             
-def extract_train_data(num_images):
-    return extract_data_from_directory(training_data_directory,"satImage", num_images, True)
+def extract_train_data(num_images, img_patch_size):
+    return extract_data_from_directory(training_data_directory,"satImage", num_images,img_patch_size, True)
 
 # Assign a label to a patch v
 def value_to_class(v):

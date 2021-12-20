@@ -15,6 +15,8 @@ def main():
     NUMBER_TRAINING_EXAMPLES = 100
     train_data = extract_train_data(NUMBER_TRAINING_EXAMPLES,img_patch_size)
     train_labels =  extract_labels(training_data_directory, NUMBER_TRAINING_EXAMPLES,img_patch_size, False)
+    print(train_data.shape)
+    print(train_labels.shape)
     #define training params and train
     epochs = 50
     nbr_filters = 64

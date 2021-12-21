@@ -1,5 +1,5 @@
 from helpers_unet import *
-from helpers_images_prototype import *
+from helpers_images import *
 import os
 PATH_TEST_IMAGES = "../data/test_set_images/"
 PATH_TRAINING_IMAGES = "../data/training/"

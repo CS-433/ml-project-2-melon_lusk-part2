@@ -13,7 +13,6 @@ import tensorflow_addons as tfa
 training_data_directory = "../data/training/"
 test_data_directory = "../data/test_set_images/"
 PIXEL_DEPTH = 255
-IMG_PATCH_SIZE = 400
 IMG_SIZE = 400
 
 # Extract patches from a given image
@@ -31,16 +30,7 @@ def img_crop(im, w, h):
             list_patches.append(im_patch)
     return list_patches
 
-def extract_data_from_image(img_array):
-    IMG_WIDTH = img_array[0].shape[0]
-    IMG_HEIGHT = img_array[0].shape[1]
-    N_PATCHES_PER_IMAGE = (IMG_WIDTH/IMG_PATCH_SIZE)*(IMG_HEIGHT/IMG_PATCH_SIZE)
-    
-    img_patches = img_crop(img_array,IMG_PATCH_SIZE,IMG_PATCH_SIZE)
-    data = [img_patches[i] for i in range(len(img_patches))]
-    return data
-
-def extract_data_from_directory(directory_name, file_basename, num_images, training = True):
+def extract_data_from_directory(directory_name, file_basename, num_images, img_patch_size, training = True):
     """
     Function used to extract image data from a directory. Most notably used  in the function "extract_train_data".
     """
@@ -61,7 +51,7 @@ def extract_data_from_directory(directory_name, file_basename, num_images, train
     num_images = len(imgs)
     IMG_WIDTH = imgs[0].shape[0]
     IMG_HEIGHT = imgs[0].shape[1]
-    N_PATCHES_PER_IMAGE = (IMG_WIDTH/IMG_PATCH_SIZE)*(IMG_HEIGHT/IMG_PATCH_SIZE)
+    N_PATCHES_PER_IMAGE = (IMG_WIDTH/img_patch_size)*(IMG_HEIGHT/img_patch_size)
     
     """
     From this point on, we carry out multiple data augmentations as a way to not only have more data but also to prevent overfitting.
@@ -96,12 +86,12 @@ def extract_data_from_directory(directory_name, file_basename, num_images, train
     # DATA AUGMENTATION: END
     
     num_images = len(imgs)
-    img_patches = [img_crop(imgs[i], IMG_PATCH_SIZE, IMG_PATCH_SIZE) for i in range(num_images)]
+    img_patches = [img_crop(imgs[i], img_patch_size, img_patch_size) for i in range(num_images)]
     data = [img_patches[i][j] for i in range(len(img_patches)) for j in range(len(img_patches[i]))]
     return tf.convert_to_tensor(data)
             
-def extract_train_data(num_images):
-    return extract_data_from_directory(training_data_directory,"satImage", num_images, True)
+def extract_train_data(num_images, img_patch_size):
+    return extract_data_from_directory(training_data_directory,"satImage", num_images,img_patch_size, True)
 
 # Assign a label to a patch v
 def value_to_class(v):
@@ -114,7 +104,7 @@ def value_to_class(v):
 
 
 # Extract label images
-def extract_labels(filename, num_images, unet = False):
+def extract_labels(filename, num_images, img_patch_size, unet = False):
     """
     Extract the labels into a 1-hot matrix [image index, label index] in the case of a CNN. Otherwise, return the groundtruths of the training
     data after applying data augmentation.
@@ -171,7 +161,7 @@ def extract_labels(filename, num_images, unet = False):
     # DATA AUGMENTATION: END
     
     num_images = len(gt_imgs)
-    gt_patches = [img_crop(gt_imgs[i], IMG_PATCH_SIZE, IMG_PATCH_SIZE) for i in range(num_images)]
+    gt_patches = [img_crop(gt_imgs[i], img_patch_size, img_patch_size) for i in range(num_images)]
     
     if unet: #if we are using a unet, we expand the dimensions of the patches as the unet works with tensors and not matrices
         data = numpy.asarray([numpy.expand_dims(gt_patches[i][j],-1) for i in range(len(gt_patches)) for j in range(len(gt_patches[i]))])
@@ -235,31 +225,31 @@ def make_img_overlay(img, predicted_img):
     return new_img
 
 
-def get_prediction(img, model):
-    data = numpy.asarray(img_crop(img, IMG_PATCH_SIZE, IMG_PATCH_SIZE))
+def get_prediction(img, model, img_patch_size):
+    data = numpy.asarray(img_crop(img, img_patch_size, img_patch_size))
     output_prediction = model(data)
-    img_prediction = label_to_img(img.shape[0], img.shape[1], IMG_PATCH_SIZE, IMG_PATCH_SIZE, output_prediction)
+    img_prediction = label_to_img(img.shape[0], img.shape[1], img_patch_size, img_patch_size, output_prediction)
 
     return img_prediction
-def get_prediction_with_groundtruth(img, model):
-    img_prediction = get_prediction(img, model)
+def get_prediction_with_groundtruth(img, model,img_patch_size):
+    img_prediction = get_prediction(img, model,img_patch_size)
     cimg = concatenate_images(img, img_prediction)
 
     return cimg, img_prediction
     
     
-def get_prediction_with_overlay(img, model):
-    img_prediction = get_prediction(img,model)
+def get_prediction_with_overlay(img, model,img_patch_size):
+    img_prediction = get_prediction(img,model,img_patch_size)
     oimg = make_img_overlay(img, img_prediction)
     return oimg
 
 
-def get_prediction_with_groundtruth_from_file(filename, image_idx, model):
+def get_prediction_with_groundtruth_from_file(filename, image_idx, model,img_patch_size):
     imageid = "satImage_%.3d" % image_idx
     image_filename = filename + imageid + ".png"
     img = mpimg.imread(image_filename)
 
-    img_prediction = get_prediction(img,model)
+    img_prediction = get_prediction(img,model,img_patch_size)
     cimg = concatenate_images(img, img_prediction)
 
     return cimg

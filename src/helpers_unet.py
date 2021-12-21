@@ -11,7 +11,7 @@ from keras.callbacks import EarlyStopping, ReduceLROnPlateau
 
 from cost_functions import *
 from submission_creation import *
-from helpers_images_prototype import *
+from helpers_images import *
 
 PATH_TEST_IMAGES = "../data/test_set_images/"
 PREDICTIONS_PATH = "./predictions/"

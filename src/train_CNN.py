@@ -1,5 +1,6 @@
 from helpers_CNN import *
 from helpers_images_prototype import *
+import os
 PATH_TEST_IMAGES = "../data/test_set_images/"
 PATH_TRAINING_IMAGES = "../data/training/"
 
@@ -10,6 +11,9 @@ The created model will be saved in the 'models' folder.
 """
 
 def main():
+    #Running on GPU ends up in an OOM even on a 3080, so we force execution on a CPU
+    os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+
     #load data
     img_patch_size = 16
     NUMBER_TRAINING_EXAMPLES = 100

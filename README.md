@@ -30,4 +30,6 @@ This strategy didn't prove itself to be efficient however, and thus we turned to
 The most notable models can be found in the "models" subfolder of "src"; the Unet architecture can be seen here : https://i.imgur.com/eJ0Tscx.png .
 
 ### Running the code
-In order to generate the predictions made by our best model, as well as the corresponding CSV file that can be uploaded to [AIcrowd](https://www.aicrowd.com), simply run the "run.py" file, and it will generate a folder in which you can see the predictions made.
+There are multiple scripts that can be run in the 'src' folder: if one wishes to retrain the models, they can either run the 'train_CNN.py' or the 'train_unet.py', which will create the corresponding model and save it in the 'models' folder. 
+In order to generate the predictions made by our best model, as well as the corresponding CSV file that can be uploaded to [AIcrowd](https://www.aicrowd.com), simply run the "run.py" file, and it will generate a folder in which you can see the predictions made, as well as the CSV. 
+Otherwise, if the predictions folder already exists, simply run "submission_creation.py" to get the corresponding CSV.

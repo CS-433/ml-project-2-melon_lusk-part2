@@ -5,7 +5,7 @@ This is our submission for the second project of "CS-433: Machine Learning" wher
 ## Note on the used hardware
 
 At the beginning of the project, we tried running the different code on our machines locally; however, because of limitations in computational power, it was infeasable for most of us, as it would take more than an hour to train a single step of some models.  
-As such, we made use of the free [Google Colab](https://colab.research.google.com) which permitted us to make use of a GPU as to make our code go faster. As such, be weary that unless you have installed the GPU version of tensorflow, and have a powerful GPU, the code may take very long to execute (it takes between one and two hours on the hardware available on the free version of Google Colab).  
+As such, we made use of the free [Google Colab](https://colab.research.google.com) which permitted us to make use of a GPU (an NVIDIA Tesla K80 GPU, to be exact) as to make our code go faster. As such, be weary that unless you have installed the GPU version of tensorflow, and have a powerful GPU, the code may take a very long time to execute (it takes between one and two hours on the hardware available on the free version of Google Colab).  
 
 ## Problem description
 
